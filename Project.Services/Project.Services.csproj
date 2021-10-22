@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="Hangfire" Version="1.7.22" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Project.Dto\Project.Dto.csproj" />
+    <ProjectReference Include="..\Project.Enum\Project.Enum.csproj" />
+    <ProjectReference Include="..\Project.Filter\Project.Filter.csproj" />
+    <ProjectReference Include="..\Project.Repository\Project.Data.csproj" />
+    <ProjectReference Include="..\Common\Common.Mail\Common.Mail.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Config\" />
+    <Folder Include="Helper\" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,4 @@
+					<div class="form-group <#colformField#>">
+                        <label for="<#propertyNameLowerCase#>"><#propertyName#></label>
+                        <datepicker name="<#propertyNameLowerCase#>" v-model="<#modelType#>.<#propertyNameLowerCase#>" input-class="form-control form-control-alternative" placeholder="<#propertyNameLowerCase#>" :language="datepicker_lang" :format="datepicker_format" <#isRequired#> />
+                    </div>

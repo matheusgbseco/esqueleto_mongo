@@ -1,0 +1,8 @@
+					<div class="form-group <#colformField#>">
+						<label><#propertyName#>?</label>
+						<span class="clearfix"></span>
+						<label class="custom-toggle">
+							<input type="checkbox" name="<#propertyNameLowerCase#>" v-model="<#modelType#>.<#propertyNameLowerCase#>">
+							<span class="custom-toggle-slider rounded-circle"></span>
+						</label>
+					</div>

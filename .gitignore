@@ -1,0 +1,11 @@
+
+**/.vs
+**/packages
+**/publish
+**/bin
+**/obj
+**/node_modules
+**/dist
+**.pdb
+
+**/appsettings.development.json

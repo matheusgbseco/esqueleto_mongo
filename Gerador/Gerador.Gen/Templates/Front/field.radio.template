@@ -1,0 +1,17 @@
+				<div class="form-group <#colformField#>">
+                    <label><#propertyName#></label>
+                    <div class="form-group">
+						<div class="custom-control custom-radio">
+							<input class="custom-control-input" name="<#propertyNameLowerCase#>" v-model="<#modelType#>.<#propertyNameLowerCase#>" value="undefined" type="radio">
+							<label class="custom-control-label" for="<#propertyNameLowerCase#>">All</label>
+						</div>
+						<div class="custom-control custom-radio">
+							<input class="custom-control-input" name="<#propertyNameLowerCase#>" v-model="<#modelType#>.<#propertyNameLowerCase#>" value="true" type="radio">
+							<label class="custom-control-label" for="<#propertyNameLowerCase#>">Yes</label>
+						</div>
+						<div class="custom-control custom-radio">
+							<input class="custom-control-input" name="<#propertyNameLowerCase#>" v-model="<#modelType#>.<#propertyNameLowerCase#>" value="false" type="radio">
+							<label class="custom-control-label" for="<#propertyNameLowerCase#>">No</label>
+						</div>
+                    </div>
+                </div>

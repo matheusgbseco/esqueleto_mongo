@@ -1,0 +1,12 @@
+﻿namespace <#namespace#>.Data.Model
+{
+    public class <#className#> : <#className#>Base
+    {
+        public <#className#>()
+            : base()
+        {
+
+        }
+
+    }
+}

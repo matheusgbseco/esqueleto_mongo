@@ -1,0 +1,52 @@
+﻿using Common.Orm;
+using <#namespace#>.Filters;
+using <#namespace#>.Data.Context;
+using <#namespace#>.Data.Model;
+using System.Linq;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Common.Domain.Model;
+using Microsoft.EntityFrameworkCore;
+
+namespace <#namespace#>.Data.Repository
+{
+    public abstract class <#className#>RepositoryBase : Repository<<#className#>>
+    {
+        protected CurrentUser _user;
+
+        public <#className#>RepositoryBase(DbContextCore ctx, CurrentUser user) : base(ctx)
+        {
+            this._user = user;
+        }
+				
+        public abstract IQueryable<<#className#>> GetByFilters(<#className#>Filter filters);
+
+		
+		public virtual async Task<IEnumerable<dynamic>> GetDataItems(<#className#>Filter filters)
+        {
+            var querybase = this.GetByFilters(filters);
+            return await querybase.Select(_ => new { Id = _.<#KeyName#>, Name = _.<#DataItemFieldName#> }).ToListAsync();
+        }
+		
+        public virtual async Task<IEnumerable<dynamic>> GetDataListCustom(<#className#>Filter filters)
+        {
+            var querybase = await this.GetAll().Select(_ => new
+            {
+                Id = _.<#KeyName#>,
+				Name = _.<#DataItemFieldName#>
+            }).ToListAsync();
+
+            return querybase;
+        }
+
+        protected IQueryable<<#className#>> SimpleFilters(<#className#>Filter filters, IQueryable<<#className#>> queryBase)
+        {
+			var queryFilter = queryBase;
+            
+<#filtersExpressions#>
+
+            return queryFilter;
+        }
+        
+    }
+}

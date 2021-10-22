@@ -1,0 +1,50 @@
+<template>
+
+    <div class="container-fluid mt--8">
+
+        <div class="row">
+            <div class="col">
+                <div class="card shadow">
+                    <div class="card-header border-0">
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <h2>
+                                    <i class="fas fa-plus"></i>
+                                    Novo <#classNameFormated#>
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+						<form-create v-if="dialogCreate" @on-saved="onSaved" @on-back="onBack()" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</template>
+<script>
+
+    import formCreate from './<#classNameLower#>-form-create'
+
+    export default {
+        name: '<#classNameLower#>-create',
+        components: { formCreate },
+        data: () => ({
+            dialogCreate: false,
+        }),
+        methods: {
+            onSaved(data) {
+                this.$router.push({ path: '/<#classNameLower#>/edit/' + data.data.<#KeyNameCamelCase#> });
+            },
+            onBack() {
+                this.$router.go(-1);
+            }
+        },
+        mounted() {
+            this.dialogCreate = true;
+        }
+    };
+</script>
+

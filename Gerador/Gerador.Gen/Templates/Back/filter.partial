@@ -1,0 +1,10 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace <#namespace#>.Filters
+{
+    public class <#className#>Filter : <#className#>FilterBase
+    {
+    }
+}

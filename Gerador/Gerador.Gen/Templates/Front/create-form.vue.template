@@ -1,0 +1,63 @@
+<template>
+
+    <form ref="<#classNameLower#>-form-create" v-on:keyup.enter="executeCreate(model)" novalidate>
+
+        <div class="row">
+
+            <#formFields#>
+
+        </div>
+
+        <button type="button" class="btn btn-outline-default" @click="onBack()">
+            <span><i class="fas fa-arrow-left"></i> Voltar</span>
+        </button>
+        <button type="button" class="btn btn-success float-right" @click="executeCreate(model)">
+            <span><i class="fas fa-save"></i> Salvar</span>
+        </button>
+
+    </form>
+
+
+</template>
+<script>
+    
+    import base from '@/common/mixins/base.js'
+    import Api from '@/common/api'
+
+    export default {
+        name: "<#classNameLower#>-form-create",
+        mixins: [base],
+        data: () => ({
+
+            model: {},
+
+            form: "<#classNameLower#>-form-create",
+
+        }),
+		
+        methods: {
+
+            executeCreate(model) {
+
+                if (this.formValidate() == false)
+                    return;
+
+                this.showLoading();
+                
+                new Api('<#classNameLower#>').post(model).then(_result => {
+                    this.$emit('on-saved', _result)
+                    this.defaultSuccessResult();
+                    this.hideLoading();
+                }, err => {
+                    this.defaultErrorResult(err);
+                    this.hideLoading();
+                })
+            },
+
+            onBack() {
+                this.$emit('on-back')
+            }
+        },
+    };
+</script>
+

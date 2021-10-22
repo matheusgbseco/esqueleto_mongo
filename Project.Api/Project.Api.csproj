@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.90" />
+    <PackageReference Include="Hangfire" Version="1.7.22" />
+    <PackageReference Include="Hangfire.MemoryStorage" Version="1.7.0" />
+    <PackageReference Include="MongoDB.Driver" Version="2.13.2" />
+    <PackageReference Include="Serilog.Extensions.Logging.File" Version="2.0.0" />
+    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Project.CrossCuting\Project.CrossCuting.csproj" />
+    <ProjectReference Include="..\Project.Services\Project.Services.csproj" />
+    <ProjectReference Include="..\Project.Dto\Project.Dto.csproj" />
+    <ProjectReference Include="..\Project.Filter\Project.Filter.csproj" />
+    <ProjectReference Include="..\Project.Repository\Project.Data.csproj" />
+    <ProjectReference Include="..\Common\Common.Api\Common.Api.csproj" />
+    <ProjectReference Include="..\Common\Common.Domain\Common.Domain.csproj" />
+    <ProjectReference Include="..\Common\Common.Mail\Common.Mail.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Logs\" />
+  </ItemGroup>
+  
+</Project>
+

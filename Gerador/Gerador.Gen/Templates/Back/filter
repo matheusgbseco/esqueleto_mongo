@@ -1,0 +1,9 @@
+﻿using System;
+
+namespace <#namespace#>.Filters
+{
+    public class <#className#>FilterBase : Common.Domain.Base.FilterBase
+    {
+<#property#>
+    }
+}
