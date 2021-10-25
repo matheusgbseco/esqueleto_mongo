@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Project.Core.Dto
 {
-	public class UsuarioDtoDetail: UsuarioDto
+	public class UsuarioDtoDetail : UsuarioDto
 	{
 
 	}

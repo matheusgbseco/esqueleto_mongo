@@ -47,7 +47,7 @@ namespace Common.API.Extensions
 
                         var userId = context.Request.Headers["User-Id"];
                         if (!userId.IsNullOrEmpaty())
-                            claimsDictonary.Add("sub", Guid.Parse(userId));
+                            claimsDictonary.Add("sub", userId);
 
                         this.ConfigClaims(currentUser, tokenClear, claimsDictonary);
                     }

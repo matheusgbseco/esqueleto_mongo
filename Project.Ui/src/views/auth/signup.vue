@@ -31,11 +31,11 @@
                                         </div>
                                         <div class="form-group col-md-12">
                                             <label for="email">login</label>
-                                            <input type="text" class="form-control" name="login" placeholder="E-mail" v-model="model.login" required />
+                                            <input type="text" class="form-control" name="login" placeholder="Login" v-model="model.login" required />
                                         </div>
                                         <div class="form-group col-md-12">
                                             <label for="password">Password</label>
-                                            <input type="password" class="form-control" name="senha" placeholder="Enter the password" v-model="model.senha" required />
+                                            <input type="password" class="form-control" name="senha" placeholder="Senha" v-model="model.senha" required />
                                         </div>
                                         <!--<div class="form-group col-md-6">
                                             <label for="password">Confirm</label>
@@ -80,18 +80,17 @@
             }
         },
         methods: {
-            async createUser() {
+            createUser() {
 
-                let isValid = await this.formValidate();
-                if (isValid == false)
-                    return;
+                //let isValid = await this.formValidate();
+                //if (isValid == false)
+                //    return;
 
-                new Api("Usuario")
+                new Api("Usuario/CriarUsuario")
                     .post(this.model)
                     .then(() => {
-
-                        
-
+                        this.defaultSuccessResult("Please login");
+                        this.$router.push('/auth/signin')
                     }, err => {
                         this.defaultErrorResult(err, true);
                     });

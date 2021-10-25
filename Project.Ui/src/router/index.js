@@ -20,6 +20,16 @@ const routes = [
                 name: '/home',
                 component: () => import('../views/home')
             },
+            {
+                path: '/categoria',
+                name: '/categoria',
+                component: () => import('../views/categoria')
+            },
+            {
+                path: '/produto',
+                name: '/produto',
+                component: () => import('../views/produto')
+            },
         ].concat(generated),
     },
 
@@ -61,20 +71,19 @@ const router = new VueRouter({
 router.beforeEach(async (to, from, next) => {
 
     if (to.matched.some(record => record.meta.requiresAuth)) {
-        Auth.logged(logged => {
 
-            if (!logged)
-                next('/auth/signin')
+        if (!Auth.logged()) {
+            Auth.login(true);
+            return;
+        }
 
-            else if (!Auth.canAccess(to.path))
-                next('/acessonegado')
+        if (!Auth.canAccess(to.path)) {
+            next('/acessonegado')
+            return;
+        }
 
-            else
-                next();
-        })
     }
-    else
-        next();
+    next();
 });
 
 export default router

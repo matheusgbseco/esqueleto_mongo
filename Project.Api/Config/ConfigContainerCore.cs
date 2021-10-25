@@ -16,9 +16,12 @@ namespace Project.Core.Api.Config
             services.AddScoped<DbContextMongoDb>();
             services.AddScoped<ValidationContract>();
 
+            services.AddScoped<CategoriaRepository>();
+            services.AddScoped<CategoriaService>();
             services.AddScoped<UsuarioRepository>();
             services.AddScoped<UsuarioService>();
-
+            services.AddScoped<ProdutoRepository>();
+            services.AddScoped<ProdutoService>();
             
             RegisterOtherComponents(services);
         }

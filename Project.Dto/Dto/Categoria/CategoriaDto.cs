@@ -5,16 +5,13 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Project.Core.Dto
 {
-	public class UsuarioDto : DtoBase
+	public class CategoriaDto  : DtoBase
 	{
 
         [BsonId]
         public ObjectId Id { get; set; }
-        public string UsuarioId { get; set; } 
+        public string CategoriaId { get; set; } 
         public string Nome { get; set; }
-        public string Login { get; set; }
-        public string Senha { get; set; }
-        public string Token { get; set; } 
 		
 	}
 }

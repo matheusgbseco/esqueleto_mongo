@@ -1,3 +1,5 @@
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using System;
 
 namespace Project.Core.Data.Model
@@ -12,7 +14,8 @@ namespace Project.Core.Data.Model
             this.Senha = senha;
         }
 
-
+        [BsonId]
+        public ObjectId Id { get; set; }
         public string UsuarioId { get; set; }
         public string Nome { get; set; }
         public string Login { get; set; }

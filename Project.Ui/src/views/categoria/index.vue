@@ -12,7 +12,7 @@
                                 <div class="col-xl-6">
                                     <h2>
                                         <i class="fas fa-cogs"></i>
-                                        Cadastro > Pessoas
+                                        Cadastro > Categorias
                                     </h2>
                                 </div>
                                 <div class="col-xl-6 text-right">
@@ -32,15 +32,6 @@
                                         <label for="nome">Nome</label>
                                         <input type="text" class="form-control form-control-alternative" name="nome" placeholder="Nome" v-model="filter.nome" />
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="dataCadastro">DataCadastro</label>
-                                        <datepicker name="dataCadastro" v-model="filter.dataCadastro" input-class="form-control form-control-alternative" placeholder="dataCadastro" :language="datepicker_lang" :format="datepicker_format" />
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <label for="email">Email</label>
-                                        <input type="text" class="form-control form-control-alternative" name="email" placeholder="Email" v-model="filter.email" />
-                                    </div>
-
                                 </div>
                                 <div class="text-right">
                                     <button type="button" class="btn btn-secondary" @click="executeFilter(filter)"><i class="fas fa-search"></i> Buscar</button>
@@ -54,25 +45,23 @@
                                         <th class="text-center" width="150"><i class="fa fa-cog"></i></th>
                                         <th>#</th>
                                         <th>Nome <i @click="executeOrderBy('Nome')" class="fa fa-sort"></i></th>
-                                        <th>DataCadastro <i @click="executeOrderBy('DataCadastro')" class="fa fa-sort"></i></th>
-                                        <th>Email <i @click="executeOrderBy('Email')" class="fa fa-sort"></i></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="item in result.items" v-bind:key="item.pessoaId" class="animated fadeIn">
+                                    <tr v-for="(item,index) in result.items" v-bind:key="item.categoriaId" class="animated fadeIn">
                                         <td class="text-center">
-                                            <button type="button" class="btn btn-sm btn-primary" @click="openEdit({ pessoaId: item.pessoaId })">
+                                            <button type="button" class="btn btn-sm btn-primary" @click="openEdit({ categoriaId: item.categoriaId })">
                                                 <i class="far fa-edit"></i>
                                             </button>
-                                            <button type="button" class="btn btn-sm btn-danger" @click="openRemove({ pessoaId: item.pessoaId })">
+                                            <button type="button" class="btn btn-sm btn-danger" @click="openRemove({ categoriaId: item.categoriaId })">
                                                 <i class="far fa-trash-alt"></i>
                                             </button>
+                                            <button type="button" class="btn btn-sm btn-danger" title="Detalhes" @click="openDetalhes(item)">
+                                                <i class="fa fa-book"></i>
+                                            </button>
                                         </td>
-                                        <td>{{ item.pessoaId }}</td>
+                                        <td>{{ index+1 }}</td>
                                         <td>{{ item.nome }}</td>
-                                        <td>{{ item.dataCadastro  | moment('DD/MM/YYYY HH:mm') }}</td>
-                                        <td>{{ item.email }}</td>
-
                                     </tr>
                                 </tbody>
                             </table>
@@ -92,7 +81,7 @@
         </b-modal>
 
         <b-modal :no-close-on-backdrop="true" :no-close-on-esc="true" centered v-model="dialogEdit" size="lg" :hide-footer="true" title="Editar">
-            <form-edit v-if="dialogEdit" :id="pessoaId" @on-saved="onSaved()" @on-back="hideAll()" />
+            <form-edit v-if="dialogEdit" :id="categoriaId" @on-saved="onSaved()" @on-back="hideAll()" />
         </b-modal>
 
         <b-modal :no-close-on-backdrop="true" :no-close-on-esc="true" centered v-model="dialogRemove" title="Confirmação">
@@ -101,6 +90,35 @@
                 <button class="btn btn-danger btn-block" @click="executeRemove()">
                     <i class="far fa-trash-alt"></i>
                     Remover
+                </button>
+            </template>
+        </b-modal>
+
+
+        <b-modal :no-close-on-backdrop="true" :no-close-on-esc="true" centered v-model="dialogDetails" title="Detalhes da Categoria">
+            <div class="row" v-if="detailsInfo">
+
+                <div class="form-group col-md-12">
+                    <strong>Categoria: </strong>
+                    <label>{{detailsInfo.nome}}</label>
+                </div>
+
+                <div class="form-group col-md-12">
+
+                    <strong>Produtos:</strong>
+                    <ul>
+
+                        <li v-for="item of modelDetails" v-bind:key="item.produtoId">
+                            {{item.nome}}
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+            <template slot="modal-footer">
+                <button class="btn btn-success btn-block" @click="dialogDetails = false">
+                    <i class="fa fa-check"></i>
+                    ok
                 </button>
             </template>
         </b-modal>
@@ -114,11 +132,11 @@
     import base from '@/common/mixins/base.js'
     import Api from '@/common/api'
 
-    import formCreate from './pessoa-form-create'
-    import formEdit from './pessoa-form-edit'
+    import formCreate from './categoria-form-create'
+    import formEdit from './categoria-form-edit'
 
     export default {
-        name: 'pessoa',
+        name: 'categoria',
         mixins: [base],
         components: { formCreate, formEdit },
         data() {
@@ -128,9 +146,12 @@
                 dialogCreate: false,
                 dialogEdit: false,
                 dialogFilter: false,
+                dialogDetails: false,
 
                 model: {},
-                pessoaId: null,
+                modelDetails: {},
+                detailsInfo: null,
+                categoriaId: null,
 
                 filter: {
                     pageSize: 50,
@@ -146,11 +167,23 @@
         },
 
         methods: {
+            openDetalhes(filter) {
+                this.showLoading();
+                new Api('Produto/GetDetails').get({ CategoriaId: filter.categoriaId }).then(_result => {
+                    this.detailsInfo = filter;
+                    this.modelDetails = _result.data;
+                    this.dialogDetails = true
+                    this.hideLoading();
+                }, (err) => {
+                    this.hideLoading();
+                    this.defaultErrorResult(err);
+                });
+            },
             openFilter() {
                 this.dialogFilter = !this.dialogFilter;
             },
             openEdit(model) {
-                this.pessoaId = model.pessoaId;
+                this.categoriaId = model.categoriaId;
                 this.dialogEdit = true;
             },
             openCreate() {
@@ -173,7 +206,7 @@
             executeRemove(model) {
                 if (model) this.model = model;
                 this.showLoading();
-                new Api('pessoa').delete(this.model).then(() => {
+                new Api('categoria').delete(this.model).then(() => {
                     this.defaultSuccessResult();
                     this.hideAll();
                     this.hideLoading();
@@ -199,7 +232,7 @@
             },
             executeLoad() {
                 this.showLoading();
-                new Api('pessoa').get(this.filter).then(_result => {
+                new Api('categoria/GetData').get(this.filter).then(_result => {
                     if (_result.summary) this.result.total = _result.summary.total;
                     this.result.items = _result.data;
                     this.hideLoading();

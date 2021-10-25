@@ -27,7 +27,7 @@ export default {
     },
 
     getUser: function (model, onSuccess, onError) {
-        new Api("cliente/LoginClienteEcommerce").post(model).then(result => {
+        new Api("Usuario/LoginChallenger").post(model).then(result => {
             if (onSuccess) onSuccess(result.data);
 
             if (result.data != null) {
@@ -64,7 +64,7 @@ export default {
         if (saveActualPage)
             Cache.add(this.lastlocation_key, window.location.pathname);
 
-        //window.location = "/auth/signin";
+        window.location = "/auth/signin";
 
         this.reset();
     },
@@ -125,6 +125,10 @@ export default {
     getMenu() {
         var _fromcache = Cache.get(this.menu_key);
         return JSON.parse(_fromcache);
+    },
+
+    getAdditionalData() {
+        return null;
     },
 
     canAccess(url) {

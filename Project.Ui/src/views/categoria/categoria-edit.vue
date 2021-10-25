@@ -16,7 +16,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-						<form-edit v-if="dialogEdit" :id="pessoaId" @on-saved="onSaved" @on-back="onBack()" />
+						<form-edit v-if="dialogEdit" :id="categoriaId" @on-saved="onSaved" @on-back="onBack()" />
                     </div>
                 </div>
             </div>
@@ -26,25 +26,25 @@
 </template>
 <script>
 
-    import formEdit from './pessoa-form-edit'
+    import formEdit from './categoria-form-edit'
 
     export default {
-        name: 'pessoa-edit',
+        name: 'categoria-edit',
         components: { formEdit },
         data: () => ({
             dialogEdit: false,
-			pessoaId: 0
+            categoriaId: 0
         }),
         methods: {
             onSaved(data) {
-				if (data) this.$router.push({ path: '/pessoa' });
+				if (data) this.$router.push({ path: '/categoria' });
             },
             onBack() {
                 this.$router.go(-1);
             }
         },
         mounted() {
-            this.pessoaId = +this.$route.params.id;
+            this.categoriaId = +this.$route.params.id;
             this.dialogEdit = true;
         }
     };

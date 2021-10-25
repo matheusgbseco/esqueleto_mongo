@@ -26,10 +26,10 @@
 </template>
 <script>
 
-    import formCreate from './pessoa-form-create'
+    import formCreate from './categoria-form-create'
 
     export default {
-        name: 'pessoa-create',
+        name: 'categoria-create',
         components: { formCreate },
         data: () => ({
             dialogCreate: false,

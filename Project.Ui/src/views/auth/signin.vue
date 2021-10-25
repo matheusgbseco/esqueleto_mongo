@@ -36,7 +36,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                                             </div>
-                                            <input class="form-control" placeholder="E-mail" type="email" v-model="email">
+                                            <input class="form-control" placeholder="Usuario" type="text" v-model="model.login">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -44,7 +44,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                                             </div>
-                                            <input class="form-control" placeholder="Senha" type="password" v-model="password">
+                                            <input class="form-control" placeholder="Senha" type="password" v-model="model.senha">
                                         </div>
                                     </div>
                                     <div class="text-center">
@@ -74,10 +74,8 @@
 </template>
 <script>
 
-    //import auth from '@/common/auth'
-
-    //import firebase from "../../common/firebase/index";
     import base from "../../common/mixins/base"
+    import Auth from '@/common/auth'
 
     export default {
         name: 'login',
@@ -85,8 +83,10 @@
         mixins: [base],
         data() {
             return {
-                email: '',
-                password: '',
+                model: {
+                    login: "",
+                    senha:"",
+                },
 
                 errorMessage: ''
             }
@@ -96,21 +96,23 @@
                 this.$router.push('/auth/signup')
             },
             async loginWithCredencials() {
-                //this.showLoading();
-                //this.errorMessage = null;
-                //firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(() => {
-                //    this.hideLoading();
-                //    this.$router.push('/auth/verify')
-                //}).catch(error => {
-                //    this.hideLoading();
-                //    var errorCode = error.code;
-                //    var errorMessage = error.message;
-                //    if (errorCode === 'auth/wrong-password') {
-                //        this.errorMessage = 'Wrong password.'
-                //    } else {
-                //        this.errorMessage = errorMessage
-                //    }
-                //});
+                this.showLoading();
+                this.errorMessage = null;
+                Auth.getUser(this.model, data => {
+                    this.hideLoading();
+                    if (data == null) {
+                        this.errorMessage = "Usuário não encontrado, por favor verifique seu CPF e a sua Senha."
+                        this.userCredentialsCorrect = false;
+                    } else {
+                        window.location = "/home";
+                    }
+
+                }, error => {
+                    //this.error = true;
+                    var errorMessage = error.message;
+                    this.errorMessage = errorMessage
+                    this.hideLoading();
+                })
             }
         },
         mounted() {

@@ -47,7 +47,6 @@ export default class Api {
 
         this.lastAction = "post";
         this.url = await this.makeUri();
-
         return axios
             .post(this.url, model)
             .then(res => { this.handleSuccess(res.data); return res.data; })
@@ -146,8 +145,8 @@ export default class Api {
         let _accesstoken = await Auth.getToken()
         if (_accesstoken) axios.defaults.headers.common['Authorization'] = "Bearer " + _accesstoken;
 
-        let _userId = Auth.getUserId()
-        if (_userId) axios.defaults.headers.common['User-Id'] = _userId;
+        let _userId = await Auth.currentUser()
+        if (_userId) axios.defaults.headers.common['User-Id'] = _userId.usuarioId;
 
         axios.defaults.headers.common['Accept-Language'] = "pt-BR";
     }

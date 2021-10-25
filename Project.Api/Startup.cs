@@ -61,7 +61,7 @@ namespace Project.Core.Api
             var signingConfigurations = new SigningConfigurations();
             services.AddSingleton(signingConfigurations);
 
-            services.Configure<DbContextMongoDb>(Configuration.GetSection("EFCoreConnStrings"));
+            services.Configure<DbContextMongoDb>(Configuration.GetSection("ConnStringMongoDB"));
             services.AddSingleton<IContextMongoDb>(sp => sp.GetRequiredService<IOptions<DbContextMongoDb>>().Value);
 
             services.AddSingleton<IConfiguration>(Configuration);

@@ -2,4 +2,8 @@ export default {
 
     END_POINT_DEFAULT: process.env.VUE_APP_ENDPOINT_DEFAULT,
 
+    ACCESS_TOKEN: "PFB_AC_T_X857D",
+    ID_TOKEN: "PFB_ID_T_D98SW",
+    USER_INFO: "PFB_U_I_D8D5D",
+    ID_STATE: "PFB_ID_S_852PL",
 }

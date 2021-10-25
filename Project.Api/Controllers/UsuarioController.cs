@@ -10,6 +10,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Common.Domain.Base;
+using Common.Domain.Security;
 
 namespace Project.Core.Api.Controllers
 {
@@ -30,45 +31,11 @@ namespace Project.Core.Api.Controllers
         }
 
 
-        //[Authorize]
-        //[HttpGet]
-        //public virtual async Task<IActionResult> Get([FromQuery] UsuarioFilter filters)
-        //{
-        //    var result = new HttpResult<UsuarioDto>(this._logger, this._service);
-        //    try
-        //    {
-        //        var searchResult = await this._service.GetByFiltersPaging(filters);
-        //        return result.ReturnCustomResponse(searchResult);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return result.ReturnCustomException(ex, "Pessoa", filters);
-        //    }
-        //}
-
-
-        //[Authorize]
-        //[HttpGet("{id}")]
-        //public virtual async Task<IActionResult> Get(Guid id, [FromQuery] UsuarioFilter filters)
-        //{
-        //    var result = new HttpResult<UsuarioDto>(this._logger, this._service);
-        //    try
-        //    {
-        //        filters.PessoaId = id;
-        //        var returnModel = await this._service.GetById(filters);
-        //        return result.ReturnCustomResponse(returnModel);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return result.ReturnCustomException(ex, "Pessoa", id);
-        //    }
-        //}
-
         [AllowAnonymous]
-        [HttpPost]
-        public virtual async Task<IActionResult> Post([FromBody] UsuarioDtoSave dto)
+        [HttpPost("CriarUsuario")]
+        public virtual async Task<IActionResult> CriarUsuario([FromBody] UsuarioDtoSave dto)
         {
-            var result = new HttpResult<UsuarioDto>(this._logger);
+            var result = new HttpResult<UsuarioDtoSave>(this._logger);
             try
             {
                 var returnModel = await this._service.CriarUsuario(dto);
@@ -81,38 +48,21 @@ namespace Project.Core.Api.Controllers
             }
         }
 
-        //[Authorize]
-        //[HttpPut]
-        //public virtual async Task<IActionResult> Put([FromBody] UsuarioDtoSave dto)
-        //{
-        //    var result = new HttpResult<UsuarioDto>(this._logger, this._service);
-        //    try
-        //    {
-        //        var returnModel = await this._service.SavePartial(dto);
-        //        return result.ReturnCustomResponse(returnModel);
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return result.ReturnCustomException(ex, "Pessoa", dto);
-        //    }
-        //}
-
-        //[Authorize]
-        //[HttpDelete]
-        //public virtual async Task<IActionResult> Delete(UsuarioDto dto)
-        //{
-        //    var result = new HttpResult<UsuarioDto>(this._logger, this._service);
-        //    try
-        //    {
-        //        await this._service.Remove(dto);
-        //        return result.ReturnCustomResponse(dto);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return result.ReturnCustomException(ex, "Pessoa", dto);
-        //    }
-        //}
+        [AllowAnonymous]
+        [HttpPost("LoginChallenger")]
+        public virtual async Task<IActionResult> LoginChallenger([FromBody] UsuarioDtoResult dto, [FromServices] SigningConfigurations signingConfigurations)
+        {
+            var result = new HttpResult<dynamic>(this._logger);
+            try
+            {
+                var returnModel = await this._service.LoginChallenger(dto, signingConfigurations);
+                return result.ReturnCustomResponse(returnModel);
+            }
+            catch (Exception ex)
+            {
+                return result.ReturnCustomException(ex, "Cliente");
+            }
+        }
 
     }
 }

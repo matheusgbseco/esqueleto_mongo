@@ -17,11 +17,16 @@
                 </ul>
 
 
-                <h6 class="navbar-heading text-muted">Administrativo</h6>
+                <h6 class="navbar-heading text-muted">Opções</h6>
                 <ul class="navbar-nav mb-md-3">
                     <li class="nav-item">
-                        <router-link class="nav-link" to="/pessoa">
-                            <i class="fas fa-cogs"></i> Pessoas
+                        <router-link class="nav-link" to="/categoria">
+                            <i class="fas fa-cogs"></i> Categorias
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link class="nav-link" to="/produto">
+                            <i class="fas fa-cogs"></i> Produtos
                         </router-link>
                     </li>
                 </ul>

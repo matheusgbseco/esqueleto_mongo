@@ -19,7 +19,7 @@ namespace Common.Orm
             var cliente = new MongoClient(databaseConfig.ConnectionString);
             var database = cliente.GetDatabase(databaseConfig.DatabaseName);
 
-            _collection = database.GetCollection<T>(className.ToString());
+            _collection = database.GetCollection<T>(className.Name);
         }
 
         public virtual IEnumerable<T> GetAll()
@@ -32,16 +32,16 @@ namespace Common.Orm
             return entity;
         }
 
-        public virtual T Update(string id, T entity)
+        public virtual T Update(Expression<Func<T, bool>> filter, T entity)
         {
-            this._collection.ReplaceOne(id,entity);
+            this._collection.ReplaceOne(filter, entity);
             return entity;
         }
 
 
-        public virtual void Remove(string id, T entity)
+        public virtual void Remove(Expression<Func<T, bool>> filter)
         {
-            //_collection.DeleteOne(entity);
+            _collection.DeleteOne(filter);
         }
 
 

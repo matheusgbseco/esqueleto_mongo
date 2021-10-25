@@ -8,10 +8,10 @@ namespace Project.Core.Services.Config
 
         public ModelToDtoCoreBase()
         {
-            CreateMap<Usuario, UsuarioDto>().ReverseMap();
-            CreateMap<Usuario, UsuarioDtoSave>().ReverseMap();
-            CreateMap<Usuario, UsuarioDtoResult>().ReverseMap();
-            CreateMap<Usuario, UsuarioDtoDetail>().ReverseMap();
+            CreateMap<Categoria, CategoriaDto>().ReverseMap();
+            CreateMap<Categoria, CategoriaDtoSave>().ReverseMap();
+            CreateMap<Categoria, CategoriaDtoResult>().ReverseMap();
+            CreateMap<Categoria, CategoriaDtoDetail>().ReverseMap();
 
         }
 
