@@ -1,1 +1,0 @@
-                                    <th><#propertyName#> <i @click="executeOrderBy('<#propertyName#>')" class="fa fa-sort"></i></th>

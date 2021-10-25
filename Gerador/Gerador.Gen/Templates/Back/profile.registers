@@ -1,1 +1,0 @@
-﻿CreateMap<<#className#>, <#className#>Dto>().ReverseMap();

@@ -1,1 +1,0 @@
-﻿this.Property(t => t.<#propertyName#>).IsRequired();
